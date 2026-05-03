@@ -2,7 +2,6 @@ import { createFileRoute } from "@tanstack/react-router";
 import { useState } from "react";
 import { Navbar } from "@/components/Navbar";
 import { Countdown } from "@/components/Countdown";
-import heroDancer from "@/assets/hero-dancer.jpg";
 import omSymbol from "@/assets/om-symbol.jpg";
 import dancerPortrait from "@/assets/dancer-portrait.jpg";
 import placeholder from "@/assets/placeholder-1.jpg";
@@ -255,5 +254,3 @@ function Index() {
   );
 }
 
-import heroImg from "@/assets/hero-dancer.jpg";
-void heroImg;
