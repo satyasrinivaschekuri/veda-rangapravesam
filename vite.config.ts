@@ -6,8 +6,8 @@ import tailwindcss from "@tailwindcss/vite";
 import tsconfigPaths from "vite-tsconfig-paths";
 import path from "path";
 
-export default defineConfig({
-  base: process.env.NODE_ENV === "production" ? "/veda-rangapravesam/" : "/",
+export default defineConfig(({ command }) => ({
+  base: command === "build" ? "/veda-rangapravesam/" : "/",
   plugins: [
     TanStackRouterVite(),
     react(),
@@ -23,4 +23,4 @@ export default defineConfig({
       "@": path.resolve(__dirname, "./src"),
     },
   },
-});
+}));
