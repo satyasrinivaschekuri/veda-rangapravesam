@@ -18,9 +18,9 @@ function RootLayout() {
       <head>
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <title>Veda Chekuri — Bharatanatyam Rangapravesam</title>
-        <meta name="description" content="Join us in celebrating Veda Chekuri's Bharatanatyam Rangapravesam on August 2, 2026 at the Richard J. Ernst Community Cultural Center, Annandale, VA." />
-        <meta property="og:title" content="Veda Chekuri — Bharatanatyam Rangapravesam" />
+        <title>Veda Chekuri — Kuchipudi Rangapravesam</title>
+        <meta name="description" content="Join us in celebrating Veda Chekuri's Kuchipudi Rangapravesam on August 2, 2026 at the Richard J. Ernst Community Cultural Center, Annandale, VA." />
+        <meta property="og:title" content="Veda Chekuri — Kuchipudi Rangapravesam" />
         <meta property="og:description" content="A solo classical debut. August 2, 2026 — Annandale, VA." />
         <meta property="og:type" content="website" />
         <link rel="preconnect" href="https://fonts.googleapis.com" />

@@ -55,7 +55,7 @@ function Index() {
           The Family of Veda Cordially Invites You to Her
         </p>
         <h1 className="font-display text-5xl md:text-7xl text-primary leading-tight">
-          Bharatanatyam
+          Kuchipudi
         </h1>
         <h1 className="font-display text-5xl md:text-7xl text-[var(--gold)] italic leading-tight mt-2">
           Rangapravesam
@@ -117,7 +117,7 @@ function Index() {
           </div>
           <div className="space-y-5 text-foreground/85 leading-relaxed">
             <p>
-              <strong className="text-primary">Veda Chekuri</strong> began her journey in Bharatanatyam at a young age,
+              <strong className="text-primary">Veda Chekuri</strong> began her journey in Kuchipudi at a young age,
               drawn to the grace, rhythm, and storytelling of this ancient classical art. Under the
               loving guidance of her Guru, she has spent years immersed in <em>nritta</em> (pure dance),
               <em> nritya</em> (expressive dance), and the rich repertoire of the South Indian classical tradition.
@@ -144,7 +144,7 @@ function Index() {
           <h3 className="font-display text-2xl text-primary">Guru Name (Placeholder)</h3>
           <p className="text-[var(--gold)] tracking-widest uppercase text-xs mt-2">Founder & Director, Dance Academy</p>
           <p className="mt-6 text-foreground/85 leading-relaxed">
-            A revered teacher of Bharatanatyam with decades of experience nurturing students in the
+            A revered teacher of Kuchipudi with decades of experience nurturing students in the
             classical tradition. Through dedicated instruction, choreography, and mentorship, the academy
             continues to share the beauty of Indian classical dance with the community.
           </p>
@@ -243,7 +243,7 @@ function Index() {
       <footer className="bg-primary text-primary-foreground py-12 px-6 text-center">
         <img src={omSymbol} alt="" width={64} height={64} className="mx-auto mb-4 opacity-90" />
         <p className="font-display text-2xl">Veda Chekuri</p>
-        <p className="font-script text-2xl text-[var(--gold-soft)] mt-1">Bharatanatyam Rangapravesam</p>
+        <p className="font-script text-2xl text-[var(--gold-soft)] mt-1">Kuchipudi Rangapravesam</p>
         <div className="divider-diamond my-6 max-w-xs mx-auto opacity-60">
           <span className="text-[var(--gold-soft)]">❖</span>
         </div>
