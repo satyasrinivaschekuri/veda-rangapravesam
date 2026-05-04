@@ -4,9 +4,12 @@ import { RouterProvider, createRouter } from '@tanstack/react-router'
 import { routeTree } from './routeTree.gen'
 import './styles.css'
 
+const basepath = import.meta.env.BASE_URL.replace(/\/$/, '') || '/'
+
 // Suppress hydration warnings for client-side only app
 const router = createRouter({
   routeTree,
+  basepath,
 })
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
