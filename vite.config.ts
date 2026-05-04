@@ -7,7 +7,7 @@ import tsconfigPaths from "vite-tsconfig-paths";
 import path from "path";
 
 export default defineConfig({
-  base: '/',
+  base: process.env.NODE_ENV === "production" ? "/veda-rangapravesam/" : "/",
   plugins: [
     TanStackRouterVite(),
     react(),
