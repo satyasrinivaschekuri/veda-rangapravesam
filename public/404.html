@@ -7,11 +7,23 @@
     // SPA redirect logic for GitHub Pages
     // Convert 404 to the appropriate route in the SPA
     var segment = "";
-    if (window.location.pathname !== "/") {
-      segment = window.location.pathname.split("/").slice(1).join("/");
+    var basePath = "/veda-rangapravesam";
+    var currentPath = window.location.pathname;
+
+    // Remove the base path if it exists
+    if (currentPath.startsWith(basePath)) {
+      segment = currentPath.substring(basePath.length);
+    } else {
+      segment = currentPath;
     }
+
+    // Remove leading slash if present
+    if (segment.startsWith("/")) {
+      segment = segment.substring(1);
+    }
+
     window.location.replace(
-      "/" + (segment || "") + (window.location.search || "")
+      basePath + "/" + (segment || "") + (window.location.search || "")
     );
   </script>
 </head>
