@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>Redirecting...</title>
+  <script>
+    // SPA redirect logic for GitHub Pages
+    // Convert 404 to the appropriate route in the SPA
+    var segment = "";
+    if (window.location.pathname !== "/") {
+      segment = window.location.pathname.split("/").slice(1).join("/");
+    }
+    window.location.replace(
+      "/" + (segment || "") + (window.location.search || "")
+    );
+  </script>
+</head>
+<body></body>
+</html>
