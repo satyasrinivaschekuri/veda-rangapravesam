@@ -22,9 +22,10 @@
       segment = segment.substring(1);
     }
 
-    window.location.replace(
-      basePath + "/" + (segment || "") + (window.location.search || "")
-    );
+    var redirectTo = basePath + (segment ? "/" + segment : "");
+    redirectTo = redirectTo.replace(/\/+/g, "/");
+
+    window.location.replace(redirectTo + (window.location.search || ""));
   </script>
 </head>
 <body></body>
