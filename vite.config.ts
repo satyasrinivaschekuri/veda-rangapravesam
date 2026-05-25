@@ -7,7 +7,7 @@ import tsconfigPaths from "vite-tsconfig-paths";
 import path from "path";
 
 export default defineConfig(({ command }) => ({
-  base: command === "build" ? "/veda-rangapravesam/" : "/",
+  base: "/",
   plugins: [
     TanStackRouterVite(),
     react(),
