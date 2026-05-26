@@ -14,19 +14,37 @@ import dance05 from "@/assets/photos/Dance_05.jpeg";
 import dance06 from "@/assets/photos/Dance_06.jpeg";
 import dance07 from "@/assets/photos/Dance_07.jpeg";
 import dance08 from "@/assets/photos/Dance_08.jpeg";
-import dance09 from "@/assets/photos/Dance_Gallery_01.jpeg";
+import dance09 from "@/assets/photos/Dance_09.jpeg";
+import danceGallery01 from "@/assets/photos/Dance_Gallery_01.jpeg";
 import danceGallery02 from "@/assets/photos/Dance_Gallery_02.jpeg";
 import danceGallery03 from "@/assets/photos/Dance_Gallery_03.jpeg";
 import danceGallery04 from "@/assets/photos/Dance_Gallery_04.jpeg";
 import danceGallery05 from "@/assets/photos/Dance_Gallery_05.jpeg";
 import danceGallery06 from "@/assets/photos/Dance_Gallery_06.jpeg";
+import danceGallery07 from "@/assets/photos/Dance_Gallery_07.jpeg";
+import danceGallery08 from "@/assets/photos/Dance_Gallery_08.jpeg";
+import danceGallery09 from "@/assets/photos/Dance_Gallery_09.jpeg";
+import danceGallery10 from "@/assets/photos/Dance_Gallery_10.jpeg";
+import danceGallery11 from "@/assets/photos/Dance_Gallery_11.jpeg";
+import danceGallery12 from "@/assets/photos/Dance_Gallery_12.jpeg";
+import danceGallery13 from "@/assets/photos/Dance_Gallery_13.jpeg";
+import danceGallery14 from "@/assets/photos/Dance_Gallery_14.jpeg";
+import danceGallery15 from "@/assets/photos/Dance_Gallery_15.jpeg";
+import danceGallery16 from "@/assets/photos/Dance_Gallery_16.jpeg";
+import danceGallery17 from "@/assets/photos/Dance_Gallery_17.jpeg";
+import danceGallery18 from "@/assets/photos/Dance_Gallery_18.jpeg";
+import danceGallery19 from "@/assets/photos/Dance_Gallery_19.jpeg";
+import danceGallery20 from "@/assets/photos/Dance_Gallery_20.jpeg";
+import danceGallery21 from "@/assets/photos/Dance_Gallery_21.jpeg";
+import danceGallery22 from "@/assets/photos/Dance_Gallery_22.jpeg";
+import danceGallery23 from "@/assets/photos/Dance_Gallery_23.jpeg";
 
 export const Route = createFileRoute("/")({ component: Index });
 
 const margams = [
   {
     name: "Pranavakaram SiddhiVinayakam",
-    description: "A traditional invocation offering gratitude and divine blessing at the start of the Margam.",
+    description: "A traditional invocation offering gratitude and divine blessing at the start of the Kuchipudi program.",
     image: dance01,
   },
   {
@@ -80,12 +98,29 @@ const orchestra = [
 ];
 
 const galleryPhotos = [
-  { src: dance09, alt: "Gallery photo 1" },
+  { src: danceGallery01, alt: "Gallery photo 1" },
   { src: danceGallery02, alt: "Gallery photo 2" },
   { src: danceGallery03, alt: "Gallery photo 3" },
   { src: danceGallery04, alt: "Gallery photo 4" },
   { src: danceGallery05, alt: "Gallery photo 5" },
   { src: danceGallery06, alt: "Gallery photo 6" },
+  { src: danceGallery07, alt: "Gallery photo 7" },
+  { src: danceGallery08, alt: "Gallery photo 8" },
+  { src: danceGallery09, alt: "Gallery photo 9" },
+  { src: danceGallery10, alt: "Gallery photo 10" },
+  { src: danceGallery11, alt: "Gallery photo 11" },
+  { src: danceGallery12, alt: "Gallery photo 12" },
+  { src: danceGallery13, alt: "Gallery photo 13" },
+  { src: danceGallery14, alt: "Gallery photo 14" },
+  { src: danceGallery15, alt: "Gallery photo 15" },
+  { src: danceGallery16, alt: "Gallery photo 16" },
+  { src: danceGallery17, alt: "Gallery photo 17" },
+  { src: danceGallery18, alt: "Gallery photo 18" },
+  { src: danceGallery19, alt: "Gallery photo 19" },
+  { src: danceGallery20, alt: "Gallery photo 20" },
+  { src: danceGallery21, alt: "Gallery photo 21" },
+  { src: danceGallery22, alt: "Gallery photo 22" },
+  { src: danceGallery23, alt: "Gallery photo 23" },
 ];
 
 function Section({ id, eyebrow, title, children, className = "" }: { id?: string; eyebrow?: string; title?: string; children: React.ReactNode; className?: string }) {
@@ -183,8 +218,8 @@ function Index() {
         <div className="grid md:grid-cols-3 gap-8">
           {[
             { h: "Date", body: <><p className="font-display text-2xl text-primary">August 2, 2026</p><p className="text-muted-foreground mt-2">Sunday</p><p className="text-sm text-muted-foreground mt-3">RSVP by July 2, 2026</p></> },
-            { h: "Time", body: <><p className="text-foreground">Seating Opens: 1:30 PM</p><p className="text-foreground mt-1">Performance: 2:00 PM – 5:00 PM</p><p className="text-muted-foreground mt-3 italic">Dinner Reception to Follow</p></> },
-            { h: "Venue", body: <><p className="font-display text-xl text-primary">Richard J. Ernst Community Cultural Center</p><p className="text-muted-foreground mt-1">Northern Virginia Community College – Annandale Campus</p><p className="text-foreground mt-2">8333 Little River Turnpike</p><p className="text-foreground">Annandale, VA 22003</p><a href="https://maps.google.com/?q=Richard+J+Ernst+Community+Cultural+Center+Annandale+VA" target="_blank" rel="noreferrer" className="inline-block mt-4 text-[var(--gold)] tracking-widest text-xs uppercase hover:underline">View Map →</a></> },
+            { h: "Time", body: <><p className="text-foreground">Seating Opens: 2:30 PM EST</p><p className="text-foreground mt-1">Event: 3:00 PM – 7:00 PM EST</p><p className="text-muted-foreground mt-3 italic">Dinner Reception to Follow</p></> },
+            { h: "Venue", body: <><p className="font-display text-xl text-primary">Richard J. Ernst Community Cultural Center</p><p className="text-muted-foreground mt-1">Northern Virginia Community College – Annandale Campus</p><p className="text-foreground mt-2">8333 Little River Turnpike</p><p className="text-foreground">Annandale, VA 22003</p><a href="https://maps.google.com/?q=Richard+J+Ernst+Community+Cultural+Center+Annandale+VA" target="_blank" rel="noreferrer" className="inline-block mt-4 text-[var(--gold)] tracking-widest text-xs uppercase hover:underline">View Map →</a></> }
           ].map((c) => (
             <div key={c.h} className="bg-card border border-border p-8 text-center">
               <h3 className="font-display text-[var(--gold)] tracking-[0.25em] uppercase text-sm mb-4">{c.h}</h3>
@@ -204,7 +239,7 @@ function Index() {
             that has shaped the dancer's journey.
           </p>
           <p>
-            On this auspicious day, Veda will perform a traditional <em>Margam</em> — a graceful
+            On this auspicious day, Veda will perform a traditional <em>Kuchipudi program</em> — a graceful
             progression of pieces that journey through pure rhythm, devotional storytelling, and
             joyful celebration. We invite you to witness this milestone with us.
           </p>
@@ -274,7 +309,7 @@ function Index() {
       </Section>
 
       {/* REPERTOIRE */}
-      <Section id="repertoire" eyebrow="The Repertoire" title="A Journey Through the Margam" className="bg-secondary/40">
+      <Section id="repertoire" eyebrow="The Repertoire" title="A Journey Through the Kuchipudi Program" className="bg-secondary/40">
         <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {margams.map((item, i) => (
             <button
@@ -290,7 +325,7 @@ function Index() {
                 <img src={item.image} alt={item.name} width={800} height={600} loading="lazy" className="w-full h-full object-contain group-hover:scale-105 transition-transform duration-700" />
               </div>
               <div className="p-6 text-center">
-                <p className="text-[var(--gold)] tracking-[0.25em] uppercase text-xs">Margam {String(i + 1).padStart(2, "0")}</p>
+                <p className="text-[var(--gold)] tracking-[0.25em] uppercase text-xs">Dance {String(i + 1).padStart(2, "0")}</p>
                 <h3 className="font-display text-2xl text-primary mt-2">{item.name}</h3>
                 <p className="text-muted-foreground text-sm mt-3 italic">{item.description}</p>
               </div>
@@ -324,7 +359,7 @@ function Index() {
                     className="mx-auto max-h-[70vh] w-full object-contain"
                   />
                   <div className="mt-6 text-center">
-                    <p className="text-[var(--gold)] tracking-[0.25em] uppercase text-xs">Margam {String(margamIndex + 1).padStart(2, "0")}</p>
+                    <p className="text-[var(--gold)] tracking-[0.25em] uppercase text-xs">Dance {String(margamIndex + 1).padStart(2, "0")}</p>
                     <h3 className="font-display text-3xl text-primary mt-3">{margams[margamIndex].name}</h3>
                     <p className="mt-4 text-sm leading-relaxed text-muted-foreground sm:text-base">
                       {margams[margamIndex].description}
@@ -340,7 +375,7 @@ function Index() {
                 </button>
               </div>
               <p className="mt-4 text-center text-sm text-muted-foreground sm:text-base">
-                {`Margam ${margamIndex + 1} of ${margams.length}`}
+                {`Dance ${margamIndex + 1} of ${margams.length}`}
               </p>
             </div>
           </div>
