@@ -142,8 +142,18 @@ function Section({ id, eyebrow, title, children, className = "" }: { id?: string
   );
 }
 
+const API_URL = import.meta.env.VITE_API_URL as string;
+
+const rsvpFields = [
+  { name: "name", label: "Full Name", type: "text", required: true },
+  { name: "email", label: "Email Address", type: "email", required: true },
+  { name: "phone", label: "Phone Number", type: "tel", required: false },
+] as const;
+
 function Index() {
   const [submitted, setSubmitted] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
+  const [submitError, setSubmitError] = useState<string | null>(null);
   const [galleryOpen, setGalleryOpen] = useState(false);
   const [galleryIndex, setGalleryIndex] = useState(0);
   const [margamOpen, setMargamOpen] = useState(false);
@@ -466,32 +476,59 @@ function Index() {
             </div>
           ) : (
             <form
-              action="https://formspree.io/f/your-form-id"
-              method="POST"
-              onSubmit={(e) => { e.preventDefault(); setSubmitted(true); }}
+              onSubmit={async (e) => {
+                e.preventDefault();
+                setSubmitError(null);
+                setSubmitting(true);
+                const fd = new FormData(e.currentTarget);
+                try {
+                  const res = await fetch(API_URL, {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({
+                      name: fd.get("name"),
+                      email: fd.get("email"),
+                      phone: fd.get("phone"),
+                      attendees: Number(fd.get("attendees")),
+                      message: fd.get("message"),
+                    }),
+                  });
+                  if (!res.ok) {
+                    const data = await res.json().catch(() => ({}));
+                    setSubmitError((data as { error?: string }).error ?? "Something went wrong. Please try again.");
+                  } else {
+                    setSubmitted(true);
+                  }
+                } catch {
+                  setSubmitError("Unable to reach the server. Please check your connection and try again.");
+                } finally {
+                  setSubmitting(false);
+                }
+              }}
               className="space-y-5"
             >
-              {[
-                { name: "name", label: "Full Name", type: "text", required: true },
-                { name: "email", label: "Email Address", type: "email", required: true },
-                { name: "phone", label: "Phone Number", type: "tel", required: false },
-              ].map((f) => (
+              {rsvpFields.map((f) => (
                 <div key={f.name}>
                   <label className="block text-xs tracking-[0.2em] uppercase text-[var(--gold)] mb-2">{f.label}</label>
-                  <input type={f.type} name={f.name} required={f.required} className="w-full bg-background border border-border px-4 py-3 focus:outline-none focus:border-[var(--gold)] transition" />
+                  <input type={f.type} name={f.name} required={f.required} className="w-full bg-background text-foreground border border-border px-4 py-3 focus:outline-none focus:border-[var(--gold)] transition" />
                 </div>
               ))}
               <div>
                 <label className="block text-xs tracking-[0.2em] uppercase text-[var(--gold)] mb-2">Number of Attendees</label>
-                <select name="attendees" className="w-full bg-background border border-border px-4 py-3 focus:outline-none focus:border-[var(--gold)]">
+                <select name="attendees" className="w-full bg-background text-foreground border border-border px-4 py-3 focus:outline-none focus:border-[var(--gold)]">
                   {Array.from({ length: 10 }).map((_, i) => <option key={i} value={i + 1}>{i + 1}</option>)}
                 </select>
               </div>
               <div>
                 <label className="block text-xs tracking-[0.2em] uppercase text-[var(--gold)] mb-2">Message for the Dancer (Optional)</label>
-                <textarea name="message" rows={4} className="w-full bg-background border border-border px-4 py-3 focus:outline-none focus:border-[var(--gold)] resize-none" />
+                <textarea name="message" rows={4} className="w-full bg-background text-foreground border border-border px-4 py-3 focus:outline-none focus:border-[var(--gold)] resize-none" />
               </div>
-              <button type="submit" className="btn-maroon w-full">Confirm Attendance</button>
+              {submitError && (
+                <p className="text-sm text-red-600">{submitError}</p>
+              )}
+              <button type="submit" disabled={submitting} className="btn-maroon w-full disabled:opacity-60">
+                {submitting ? "Sending…" : "Confirm Attendance"}
+              </button>
             </form>
           )}
         </div>
