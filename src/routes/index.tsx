@@ -489,7 +489,9 @@ function Index() {
                       name: fd.get("name"),
                       email: fd.get("email"),
                       phone: fd.get("phone"),
-                      attendees: Number(fd.get("attendees")),
+                      adults: Number(fd.get("adults")),
+                      children: Number(fd.get("children")),
+                      attendees: Number(fd.get("adults")) + Number(fd.get("children")),
                       message: fd.get("message"),
                     }),
                   });
@@ -515,9 +517,20 @@ function Index() {
               ))}
               <div>
                 <label className="block text-xs tracking-[0.2em] uppercase text-[var(--gold)] mb-2">Number of Attendees</label>
-                <select name="attendees" className="w-full bg-background text-foreground border border-border px-4 py-3 focus:outline-none focus:border-[var(--gold)]">
-                  {Array.from({ length: 10 }).map((_, i) => <option key={i} value={i + 1}>{i + 1}</option>)}
-                </select>
+                <div className="grid grid-cols-2 gap-4">
+                  <div>
+                    <label className="block text-xs text-muted-foreground mb-1">Adults</label>
+                    <select name="adults" defaultValue="1" className="w-full bg-background text-foreground border border-border px-4 py-3 focus:outline-none focus:border-[var(--gold)]">
+                      {Array.from({ length: 11 }).map((_, i) => <option key={i} value={i}>{i}</option>)}
+                    </select>
+                  </div>
+                  <div>
+                    <label className="block text-xs text-muted-foreground mb-1">Children</label>
+                    <select name="children" defaultValue="0" className="w-full bg-background text-foreground border border-border px-4 py-3 focus:outline-none focus:border-[var(--gold)]">
+                      {Array.from({ length: 11 }).map((_, i) => <option key={i} value={i}>{i}</option>)}
+                    </select>
+                  </div>
+                </div>
               </div>
               <div>
                 <label className="block text-xs tracking-[0.2em] uppercase text-[var(--gold)] mb-2">Message for the Dancer (Optional)</label>
