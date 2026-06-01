@@ -5,24 +5,20 @@
   <title>Redirecting...</title>
   <script>
     // SPA redirect logic for GitHub Pages
-    // Convert 404 to the appropriate route in the SPA
-    var segment = "";
-    var basePath = "/veda-rangapravesam";
+    // When using a custom domain, the base path is "/" not "/repo-name"
+    var basePath = window.location.hostname.endsWith("github.io") ? "/veda-rangapravesam" : "";
     var currentPath = window.location.pathname;
 
-    // Remove the base path if it exists
-    if (currentPath.startsWith(basePath)) {
-      segment = currentPath.substring(basePath.length);
-    } else {
-      segment = currentPath;
+    var segment = currentPath;
+    if (basePath && segment.startsWith(basePath)) {
+      segment = segment.substring(basePath.length);
     }
 
-    // Remove leading slash if present
     if (segment.startsWith("/")) {
       segment = segment.substring(1);
     }
 
-    var redirectTo = basePath + (segment ? "/" + segment : "");
+    var redirectTo = basePath + "/" + (segment || "");
     redirectTo = redirectTo.replace(/\/+/g, "/");
 
     window.location.replace(redirectTo + (window.location.search || ""));
