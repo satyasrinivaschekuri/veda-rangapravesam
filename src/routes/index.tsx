@@ -467,7 +467,7 @@ function Index() {
 
       {/* RSVP */}
       <Section id="rsvp" eyebrow="Join Us in Celebration" title="RSVP">
-        <p className="text-center text-muted-foreground mb-10">Please respond by July 2, 2026</p>
+        {!submitted && <p className="text-center text-muted-foreground mb-10">Please respond by July 2, 2026</p>}
         <div className="max-w-xl mx-auto bg-card border border-border p-8 md:p-10">
           {submitted ? (
             <div className="text-center py-8">
