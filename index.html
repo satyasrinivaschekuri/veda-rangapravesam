@@ -18,14 +18,11 @@
     <script>
       // Restore path encoded by 404.html for GitHub Pages SPA routing
       (function() {
-        var p = new URLSearchParams(window.location.search).get("p");
-        if (p) {
-          var decoded = decodeURIComponent(p);
-          // decoded is e.g. "/metrics?key=..." — split into pathname and search
-          var qIdx = decoded.indexOf("?");
-          var pathname = qIdx === -1 ? decoded : decoded.substring(0, qIdx);
-          var search = qIdx === -1 ? "" : decoded.substring(qIdx);
-          window.history.replaceState(null, "", pathname + search);
+        // p is the original path+search, still percent-encoded (e.g. /metrics?key=vR9%23mK2...)
+        // Do NOT decode — pass the encoded string directly so %23 stays %23, not #
+        var match = window.location.search.match(/[?&]p=([^&]*)/);
+        if (match) {
+          window.history.replaceState(null, "", match[1]);
         }
       })();
     </script>
