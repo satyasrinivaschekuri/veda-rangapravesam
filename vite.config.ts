@@ -16,7 +16,6 @@ export default defineConfig(({ command }) => ({
   ],
   build: {
     outDir: "dist",
-    // Ensure index.html is the entry point for all routes (SPA)
   },
   resolve: {
     alias: {

@@ -1,17 +1,2 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="utf-8" />
-  <title>Redirecting...</title>
-  <script>
-    // GitHub Pages SPA redirect trick:
-    // Encode the intended path+query as a query param on the root index.html,
-    // which is a real file GitHub Pages will serve. index.html then decodes and
-    // restores it via history.replaceState so the SPA router sees the right URL.
-    var basePath = window.location.hostname.endsWith("github.io") ? "/veda-rangapravesam" : "";
-    var path = window.location.pathname + window.location.search;
-    window.location.replace(basePath + "/?p=" + encodeURIComponent(path));
-  </script>
-</head>
-<body></body>
-</html>
+<html><head><meta charset="utf-8" /><title>Redirecting...</title></head><body></body></html>
