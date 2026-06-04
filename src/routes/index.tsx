@@ -14,7 +14,6 @@ import dance05 from "@/assets/photos/Dance_05.jpeg";
 import dance06 from "@/assets/photos/Dance_06.jpeg";
 import dance07 from "@/assets/photos/Dance_07.jpeg";
 import dance08 from "@/assets/photos/Dance_08.jpeg";
-import dance09 from "@/assets/photos/Dance_09.jpeg";
 import danceGallery01 from "@/assets/photos/Dance_Gallery_01.jpeg";
 import danceGallery02 from "@/assets/photos/Dance_Gallery_02.jpeg";
 import danceGallery03 from "@/assets/photos/Dance_Gallery_03.jpeg";
@@ -44,48 +43,43 @@ export const Route = createFileRoute("/")({ component: Index });
 const margams = [
   {
     name: "Pranavakaram SiddhiVinayakam",
-    description: "A traditional invocation offering gratitude and divine blessing at the start of the Kuchipudi program.",
+    description: "A vibrant invocatory piece dedicated to Lord Ganesha, the remover of obstacles, Pranavakaram celebrates the sacred sound \"Om\" through energetic movement and devotion. The composition highlights Nritta with precise footwork, brisk rhythmic patterns, and graceful geometric postures, while subtle Nritya elements express reverence and spiritual joy. Often presented early in a recital, it showcases stamina, timing, and classical technique.",
     image: dance01,
   },
   {
     name: "Manduka Shabdam",
-    description: "A rhythmic piece that showcases lively footwork and playful frog-themed mudras.",
+    description: "A lively narrative dance that blends storytelling with rhythmic movement. Set in a lush forest, the piece depicts frogs rhythmically praising Lord Vishnu through the story of Gajendra Moksham. The dance beautifully combines expressive Nritya with playful Nritta, featuring bouncing footwork, quick transitions, dramatic character portrayal, and stylized frog-like movements that make this item both theatrical and technically engaging.",
     image: dance02,
   },
   {
     name: "Bhamakalapam",
-    description: "A dramatic abhinaya item recounting stories of love and devotion from classical literature.",
+    description: "Considered the masterpiece of the Kuchipudi tradition, Bhamakalapam portrays the pride, longing, and devotion of Satyabhama, the beloved queen of Lord Krishna. Rich in Nritya, the dance emphasizes emotional storytelling, expressive dialogue, and dramatic characterization. Traditional elements such as the grand entrance behind a curtain and the iconic braided-hair challenge add theatrical depth, while interwoven Nritta passages highlight rhythmic sophistication and regal grace.",
     image: dance03,
   },
   {
     name: "Aigiri Nandini",
-    description: "A powerful devotional ode to the Goddess, blending rhythmic vigor with expressive intensity.",
+    description: "A powerful tribute to Goddess Durga, Aigiri Nandini depicts her fierce battle against the demon Mahishasura. The choreography emphasizes vigorous Nritta through dynamic footwork, strong stances, rapid rhythmic sequences, and warrior-like movements inspired by Tandava. Intense Nritya conveys both the divine mother's compassion and the goddess's fierce energy as protector and destroyer of evil.",
     image: dance04,
   },
   {
     name: "Tarangam",
-    description: "A luminous pure dance piece performed atop brass plates, celebrating rhythm and grace.",
+    description: "This beloved Tarangam expresses the Gopis' joyful devotion toward Lord Krishna. The first section features expressive Nritya, portraying Krishna's playful charm and divine beauty. The highlight of the piece is the iconic Tarangam, where the dancer performs intricate Nritta while balancing on the rim of a brass plate, symbolizing focus, balance, and spiritual surrender.",
     image: dance05,
   },
   {
     name: "Adivo Alladigo Sri Harivasamu",
-    description: "A devotional composition praising the divine sky and the Lord of the universe.",
+    description: "A deeply philosophical composition, Brahmam Okate conveys the message that all humanity is equal before the divine. Through expressive Nritya, the dancer portrays contrasting characters and everyday imagery to illustrate unity beyond social status or wealth. Gentle, flowing movements and celebratory rhythmic passages blend devotion with grace, while moments of light Nritta add joy and rhythmic elegance to the presentation.",
     image: dance06,
   },
   {
     name: "Shiva Tandavam",
-    description: "A dynamic rhythmic solo honoring Lord Shiva's cosmic dance of creation and destruction.",
+    description: "Shiva Tandavam captures the majestic cosmic dance of Lord Shiva as Nataraja, symbolizing creation, preservation, and destruction. Dominated by vigorous Nritta, the piece features powerful foot stamps, deep stances, rapid turns, and commanding poses inspired by Tandava. Expressive Nritya portrays Shiva's divine energy, meditative calm, and fierce cosmic power, making this item one of the most intense and physically demanding pieces in the repertoire.",
     image: dance07,
   },
   {
     name: "Shivudi Thillana",
-    description: "A celebratory thillana with spirited footwork and joyful syncopation.",
+    description: "A spirited concluding piece, Shivudu Thillana combines rhythmic brilliance with devotion to Lord Shiva. Primarily a Nritta composition, it showcases fast-paced footwork, striking stage patterns, spins, and crisp movements synchronized to lively percussion. Brief moments of Nritya depict Shiva's iconic form as Nataraja, creating a vibrant finale filled with energy, precision, and celebratory devotion.",
     image: dance08,
-  },
-  {
-    name: "Mangalam",
-    description: "A concluding prayer of auspiciousness, gratitude, and blessings for the audience and performer.",
-    image: dance09,
   },
 ];
 
@@ -266,19 +260,22 @@ function Index() {
           </div>
           <div className="space-y-5 text-foreground/85 leading-relaxed">
             <p>
-              <strong className="text-primary">Veda Chekuri</strong> began her journey in Kuchipudi at a young age,
-              drawn to the grace, rhythm, and storytelling of this ancient classical art. Under the
-              loving guidance of her Guru, she has spent years immersed in <em>nritta</em> (pure dance),
-              <em> nritya</em> (expressive dance), and the rich repertoire of the South Indian classical tradition.
+              <strong className="text-primary">Veda Chekuri</strong> began dancing at the age of three with an early
+              interest in Bollywood dance. She later explored ballet for a year before beginning her training in the
+              classical dance form of Kuchipudi. Under the guidance of her Guru, Veda has spent several years learning
+              the discipline, technique, and expressive elements of Kuchipudi, including <em>nritta</em> (pure dance)
+              and <em>nritya</em> (expressive dance).
             </p>
             <p>
-              Beyond the stage, Veda is a curious and compassionate young scholar with passions that
-              extend into academics, music, and community service. Dance has been a constant companion —
-              shaping her discipline, her devotion, and her sense of self.
+              In addition to Kuchipudi, Veda enjoys exploring other dance styles including Bollywood, ballet, and
+              hip-hop. She is also a dedicated student who has earned her Black Belt in Taekwondo, reflecting her
+              commitment, focus, and perseverance. Beyond dance and martial arts, her interests include academics,
+              music, and community activities.
             </p>
             <p>
-              Her Rangapravesam is both a culmination and a beginning: a heartfelt offering of gratitude
-              to her family, teachers, and community, and a promise to carry forward this timeless art.
+              Veda's Rangapravesam marks an important milestone in her Kuchipudi journey and represents years of
+              learning, practice, and encouragement from her teachers and family. She looks forward to continuing her
+              connection with dance while balancing her many interests and pursuits.
             </p>
           </div>
         </div>
