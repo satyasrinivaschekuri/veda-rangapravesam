@@ -328,8 +328,8 @@ function Index() {
               }}
               className="bg-card border border-border overflow-hidden text-left group"
             >
-              <div className="aspect-[3/2] overflow-hidden bg-muted">
-                <img src={item.image} alt={item.name} width={800} height={600} loading="lazy" className="w-full h-full object-contain group-hover:scale-105 transition-transform duration-700" />
+              <div className="aspect-[3/4] overflow-hidden bg-muted">
+                <img src={item.image} alt={item.name} width={800} height={600} loading="lazy" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
               </div>
               <div className="p-6 text-center">
                 <p className="text-[var(--gold)] tracking-[0.25em] uppercase text-xs">Dance {String(i + 1).padStart(2, "0")}</p>
