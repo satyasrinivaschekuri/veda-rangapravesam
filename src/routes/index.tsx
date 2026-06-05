@@ -328,8 +328,8 @@ function Index() {
               }}
               className="bg-card border border-border overflow-hidden text-left group"
             >
-              <div className="bg-muted flex items-center justify-center px-4 pt-4 pb-0" style={{ height: "384px" }}>
-                <img src={item.image} alt={item.name} width={800} height={600} loading="lazy" style={{ maxHeight: "352px", maxWidth: "100%", objectFit: "contain" }} className="group-hover:scale-105 transition-transform duration-700" />
+              <div className="bg-muted p-6" style={{ height: "420px" }}>
+                <img src={item.image} alt={item.name} width={800} height={600} loading="lazy" className="w-full h-full object-contain group-hover:scale-105 transition-transform duration-700" />
               </div>
               <div className="p-6 text-center">
                 <p className="text-[var(--gold)] tracking-[0.25em] uppercase text-xs">Dance {String(i + 1).padStart(2, "0")}</p>
