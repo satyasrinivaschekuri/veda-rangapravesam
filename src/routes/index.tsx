@@ -85,10 +85,10 @@ const margams = [
 
 const orchestra = [
   { role: "Nattuvangam", name: "Lakshmi Babu Garu" },
-  { role: "Vocal", name: "Vocalist Name (TBA)" },
-  { role: "Mridangam", name: "Mridangist Name (TBA)" },
-  { role: "Violin", name: "Violinist Name (TBA)" },
-  { role: "Flute", name: "Flutist Name (TBA)" },
+  { role: "Vocal", name: "Vignesh Subramanian" },
+  { role: "Mridangam", name: "Rithwik Raman" },
+  { role: "Violin", name: "Samapriya Dandibhotla" },
+  { role: "Flute", name: "Svetak Sundhar" },
 ];
 
 const galleryPhotos = [
