@@ -67,8 +67,8 @@ const margams = [
     image: dance05,
   },
   {
-    name: "Adivo Alladigo Sri Harivasamu",
-    description: "A deeply philosophical composition, Brahmam Okate conveys the message that all humanity is equal before the divine. Through expressive Nritya, the dancer portrays contrasting characters and everyday imagery to illustrate unity beyond social status or wealth. Gentle, flowing movements and celebratory rhythmic passages blend devotion with grace, while moments of light Nritta add joy and rhythmic elegance to the presentation.",
+    name: "Brahmam Okate",
+    description: "A soulful and philosophical composition, Brahmam Okate conveys the timeless message that all humanity is equal before the divine. Through expressive Nritya, the dancer portrays everyday contrasts — king and servant, rich and poor — to illustrate the unity of all living beings. Graceful movements, gentle storytelling, and uplifting rhythmic passages blend with light Nritta to create a presentation filled with devotion, compassion, and spiritual reflection. The piece beautifully emphasizes harmony, humility, and the universality of the human spirit.",
     image: dance06,
   },
   {
