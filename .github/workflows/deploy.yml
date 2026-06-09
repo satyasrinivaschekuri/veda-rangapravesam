@@ -39,6 +39,7 @@ jobs:
           VITE_API_URL: ${{ vars.VITE_API_URL }}
           VITE_METRICS_URL: ${{ vars.VITE_METRICS_URL }}
           VITE_REMINDER_URL: ${{ vars.VITE_REMINDER_URL }}
+          VITE_THANKS_URL: ${{ vars.VITE_THANKS_URL }}
 
       - name: Copy index.html to 404.html for SPA routing
         run: cp dist/index.html dist/404.html

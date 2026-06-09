@@ -18,6 +18,7 @@ export const Route = createFileRoute("/metrics")({
 
 const METRICS_URL = import.meta.env.VITE_METRICS_URL as string;
 const REMINDER_URL = import.meta.env.VITE_REMINDER_URL as string;
+const THANKS_URL = import.meta.env.VITE_THANKS_URL as string;
 
 interface Rsvp {
   id: string;
@@ -368,6 +369,131 @@ function ReminderControls({ metricsKey, totalRsvps }: { metricsKey: string; tota
   );
 }
 
+function ThanksControls({ metricsKey, totalRsvps }: { metricsKey: string; totalRsvps: number }) {
+  const [pending, setPending] = useState(false);
+  const [sending, setSending] = useState(false);
+  const [result, setResult] = useState<{ sent: number; failed: number; total: number } | null>(null);
+  const [error, setError] = useState<string | null>(null);
+  const cancelRef = useRef<HTMLButtonElement>(null);
+
+  function requestSend() {
+    setPending(true);
+    setResult(null);
+    setError(null);
+    setTimeout(() => cancelRef.current?.focus(), 0);
+  }
+
+  function cancel() {
+    setPending(false);
+  }
+
+  async function confirm() {
+    setSending(true);
+    setError(null);
+    try {
+      const res = await fetch(`${THANKS_URL}?key=${encodeURIComponent(metricsKey)}`, {
+        method: "POST",
+      });
+      if (res.status === 403) {
+        setSending(false);
+        setPending(false);
+        setError("Access denied.");
+        return;
+      }
+      if (!res.ok) {
+        setSending(false);
+        setPending(false);
+        setError(`Server error: ${res.status}`);
+        return;
+      }
+      const json = await res.json();
+      setSending(false);
+      setPending(false);
+      setResult(json);
+    } catch {
+      setSending(false);
+      setPending(false);
+      setError("Failed to reach the server.");
+    }
+  }
+
+  return (
+    <div className="mb-10">
+      <SectionHeading>Thank You Email</SectionHeading>
+
+      <div className="flex flex-wrap gap-3 mb-4">
+        <button
+          type="button"
+          disabled={sending || pending}
+          onClick={requestSend}
+          className="font-serif uppercase tracking-widest text-xs px-5 py-3 disabled:opacity-40 disabled:cursor-not-allowed transition-opacity"
+          style={{
+            backgroundColor: "var(--maroon, #4a1520)",
+            color: "#f7f3eb",
+            border: "1px solid var(--gold, #c49a3c)",
+          }}
+        >
+          Send Thank You Email
+        </button>
+      </div>
+
+      {pending && (
+        <div
+          className="flex flex-col sm:flex-row sm:items-center gap-3 p-4"
+          style={{ border: "1px solid var(--gold, #c49a3c)", backgroundColor: "#f0ebe0" }}
+        >
+          <p className="font-serif text-sm flex-1" style={{ color: "#3d1a10" }}>
+            This will send a <strong>thank-you email</strong> to{" "}
+            <strong>{totalRsvps}</strong> {totalRsvps === 1 ? "recipient" : "recipients"}. Are you sure?
+          </p>
+          <div className="flex gap-2 shrink-0">
+            <button
+              ref={cancelRef}
+              type="button"
+              onClick={cancel}
+              className="font-serif uppercase tracking-widest text-xs px-4 py-2 transition-opacity"
+              style={{
+                border: "1px solid #7a6555",
+                color: "#7a6555",
+                backgroundColor: "transparent",
+              }}
+            >
+              Cancel
+            </button>
+            <button
+              type="button"
+              disabled={sending}
+              onClick={confirm}
+              className="font-serif uppercase tracking-widest text-xs px-4 py-2 disabled:opacity-50 transition-opacity"
+              style={{
+                backgroundColor: "var(--maroon, #4a1520)",
+                color: "#f7f3eb",
+                border: "1px solid var(--gold, #c49a3c)",
+              }}
+            >
+              {sending ? "Sending…" : "Yes, Send Now"}
+            </button>
+          </div>
+        </div>
+      )}
+
+      {result && (
+        <div
+          className="p-4 font-serif text-sm"
+          style={{ border: "1px solid var(--gold, #c49a3c)", backgroundColor: "#faf8f2", color: "#3d1a10" }}
+        >
+          ✦ Thank you email sent — <strong>{result.sent}</strong> delivered,{" "}
+          <strong>{result.failed}</strong> failed, <strong>{result.total}</strong> total.
+        </div>
+      )}
+
+      {error && (
+        <p className="font-serif text-sm text-red-700 mt-2">{error}</p>
+      )}
+    </div>
+  );
+}
+
 function Dashboard({ data, metricsKey }: { data: MetricsData; metricsKey: string }) {
   const [search, setSearch] = useState("");
 
@@ -415,6 +541,8 @@ function Dashboard({ data, metricsKey }: { data: MetricsData; metricsKey: string
       <AnomalySection data={data} />
 
       <ReminderControls metricsKey={metricsKey} totalRsvps={data.total_rsvps} />
+
+      <ThanksControls metricsKey={metricsKey} totalRsvps={data.total_rsvps} />
 
       <SectionHeading>All RSVPs</SectionHeading>
 
