@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { useState, useMemo } from "react";
+import { useState, useMemo, useRef } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
@@ -17,6 +17,7 @@ export const Route = createFileRoute("/metrics")({
 });
 
 const METRICS_URL = import.meta.env.VITE_METRICS_URL as string;
+const REMINDER_URL = import.meta.env.VITE_REMINDER_URL as string;
 
 interface Rsvp {
   id: string;
@@ -233,7 +234,141 @@ function SectionHeading({ children }: { children: React.ReactNode }) {
   );
 }
 
-function Dashboard({ data }: { data: MetricsData }) {
+type ReminderType = "7-day" | "1-day";
+
+interface ReminderState {
+  pending: ReminderType | null;
+  sending: boolean;
+  result: { sent: number; failed: number; total: number } | null;
+  error: string | null;
+}
+
+function ReminderControls({ metricsKey, totalRsvps }: { metricsKey: string; totalRsvps: number }) {
+  const [state, setState] = useState<ReminderState>({
+    pending: null,
+    sending: false,
+    result: null,
+    error: null,
+  });
+  const cancelRef = useRef<HTMLButtonElement>(null);
+
+  function requestSend(type: ReminderType) {
+    setState({ pending: type, sending: false, result: null, error: null });
+    setTimeout(() => cancelRef.current?.focus(), 0);
+  }
+
+  function cancel() {
+    setState((s) => ({ ...s, pending: null }));
+  }
+
+  async function confirm() {
+    if (!state.pending) return;
+    setState((s) => ({ ...s, sending: true, error: null }));
+    try {
+      const res = await fetch(`${REMINDER_URL}?key=${encodeURIComponent(metricsKey)}`, {
+        method: "POST",
+      });
+      if (res.status === 403) {
+        setState((s) => ({ ...s, sending: false, pending: null, error: "Access denied." }));
+        return;
+      }
+      if (!res.ok) {
+        setState((s) => ({ ...s, sending: false, pending: null, error: `Server error: ${res.status}` }));
+        return;
+      }
+      const json = await res.json();
+      setState({ pending: null, sending: false, result: json, error: null });
+    } catch {
+      setState((s) => ({ ...s, sending: false, pending: null, error: "Failed to reach the server." }));
+    }
+  }
+
+  const label: Record<ReminderType, string> = {
+    "7-day": "Send 7 Day Reminder",
+    "1-day": "Send 1 Day Reminder",
+  };
+
+  return (
+    <div className="mb-10">
+      <SectionHeading>Reminder Emails</SectionHeading>
+
+      <div className="flex flex-wrap gap-3 mb-4">
+        {(["7-day", "1-day"] as ReminderType[]).map((type) => (
+          <button
+            key={type}
+            type="button"
+            disabled={state.sending || state.pending !== null}
+            onClick={() => requestSend(type)}
+            className="font-serif uppercase tracking-widest text-xs px-5 py-3 disabled:opacity-40 disabled:cursor-not-allowed transition-opacity"
+            style={{
+              backgroundColor: "var(--maroon, #4a1520)",
+              color: "#f7f3eb",
+              border: "1px solid var(--gold, #c49a3c)",
+            }}
+          >
+            {label[type]}
+          </button>
+        ))}
+      </div>
+
+      {state.pending && (
+        <div
+          className="flex flex-col sm:flex-row sm:items-center gap-3 p-4"
+          style={{ border: "1px solid var(--gold, #c49a3c)", backgroundColor: "#f0ebe0" }}
+        >
+          <p className="font-serif text-sm flex-1" style={{ color: "#3d1a10" }}>
+            This will send the <strong>{state.pending === "7-day" ? "7-day" : "1-day"} reminder</strong> to{" "}
+            <strong>{totalRsvps}</strong> {totalRsvps === 1 ? "recipient" : "recipients"}. Are you sure?
+          </p>
+          <div className="flex gap-2 shrink-0">
+            <button
+              ref={cancelRef}
+              type="button"
+              onClick={cancel}
+              className="font-serif uppercase tracking-widest text-xs px-4 py-2 transition-opacity"
+              style={{
+                border: "1px solid #7a6555",
+                color: "#7a6555",
+                backgroundColor: "transparent",
+              }}
+            >
+              Cancel
+            </button>
+            <button
+              type="button"
+              disabled={state.sending}
+              onClick={confirm}
+              className="font-serif uppercase tracking-widest text-xs px-4 py-2 disabled:opacity-50 transition-opacity"
+              style={{
+                backgroundColor: "var(--maroon, #4a1520)",
+                color: "#f7f3eb",
+                border: "1px solid var(--gold, #c49a3c)",
+              }}
+            >
+              {state.sending ? "Sending…" : "Yes, Send Now"}
+            </button>
+          </div>
+        </div>
+      )}
+
+      {state.result && (
+        <div
+          className="p-4 font-serif text-sm"
+          style={{ border: "1px solid var(--gold, #c49a3c)", backgroundColor: "#faf8f2", color: "#3d1a10" }}
+        >
+          ✦ Reminder sent — <strong>{state.result.sent}</strong> delivered,{" "}
+          <strong>{state.result.failed}</strong> failed, <strong>{state.result.total}</strong> total.
+        </div>
+      )}
+
+      {state.error && (
+        <p className="font-serif text-sm text-red-700 mt-2">{state.error}</p>
+      )}
+    </div>
+  );
+}
+
+function Dashboard({ data, metricsKey }: { data: MetricsData; metricsKey: string }) {
   const [search, setSearch] = useState("");
 
   const filteredRsvps = useMemo(() => {
@@ -278,6 +413,8 @@ function Dashboard({ data }: { data: MetricsData }) {
       </div>
 
       <AnomalySection data={data} />
+
+      <ReminderControls metricsKey={metricsKey} totalRsvps={data.total_rsvps} />
 
       <SectionHeading>All RSVPs</SectionHeading>
 
@@ -416,7 +553,7 @@ function MetricsPage() {
   }
 
   if (data) {
-    return <Dashboard data={data} />;
+    return <Dashboard data={data} metricsKey={keyInput} />;
   }
 
   if (loading) {
