@@ -62,7 +62,7 @@ const margams = [
     image: dance04,
   },
   {
-    name: "Tarangam",
+    name: "Krishnam Kalaya Sakhi Sundaram (Tarangam)",
     description: "This beloved Tarangam expresses the Gopis' joyful devotion toward Lord Krishna. The first section features expressive Nritya, portraying Krishna's playful charm and divine beauty. The highlight of the piece is the iconic Tarangam, where the dancer performs intricate Nritta while balancing on the rim of a brass plate, symbolizing focus, balance, and spiritual surrender.",
     image: dance05,
   },
@@ -209,7 +209,7 @@ function Index() {
         <p className="font-script text-3xl md:text-4xl text-[var(--maroon)] mt-8">
           Sunday, August 2, 2026
         </p>
-        <a href="#rsvp" className="btn-maroon mt-10 inline-block">Request the Honor of Your Presence</a>
+        <a href="#rsvp" className="btn-maroon mt-10 inline-block">RSVP Here</a>
 
         <div className="mt-20 w-full max-w-3xl">
           <p className="text-[var(--gold)] tracking-[0.3em] uppercase text-xs mb-6">Counting Moments Until the Ascendance</p>
@@ -222,7 +222,7 @@ function Index() {
         <div className="grid md:grid-cols-3 gap-8">
           {[
             { h: "Date", body: <><p className="font-display text-2xl text-primary">August 2, 2026</p><p className="text-muted-foreground mt-2">Sunday</p><p className="text-sm text-muted-foreground mt-3">RSVP by July 17, 2026</p></> },
-            { h: "Time", body: <><p className="text-foreground">Seating Opens: 2:00 PM EST</p><p className="text-foreground mt-1">Event: 2:30 PM – 7:30 PM EST</p><p className="text-foreground mt-1">Dinner: 7:30 PM EST</p></> },
+            { h: "Time", body: <><p className="text-foreground">Seating Opens: 2:00 PM EST</p><p className="text-foreground mt-1">Event: 2:30 PM – 7:30 PM EST</p><p className="text-foreground mt-1">Dinner: 7:30 PM EST Onwards</p></> },
             { h: "Venue", body: <><p className="font-display text-xl text-primary">Richard J. Ernst Community Cultural Center</p><p className="text-muted-foreground mt-1">Northern Virginia Community College – Annandale Campus</p><p className="text-foreground mt-2">8333 Little River Turnpike</p><p className="text-foreground">Annandale, VA 22003</p><a href="https://maps.google.com/?q=Richard+J+Ernst+Community+Cultural+Center+Annandale+VA" target="_blank" rel="noreferrer" className="inline-block mt-4 text-[var(--gold)] tracking-widest text-xs uppercase hover:underline">View Map →</a></> }
           ].map((c) => (
             <div key={c.h} className="bg-card border border-border p-8 text-center">

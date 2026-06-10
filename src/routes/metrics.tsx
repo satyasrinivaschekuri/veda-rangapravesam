@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { useState, useMemo, useRef } from "react";
+import { useState, useMemo, useRef, useCallback } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
@@ -494,6 +494,178 @@ function ThanksControls({ metricsKey, totalRsvps }: { metricsKey: string; totalR
   );
 }
 
+const EVENT_URL = "https://veda-rangapravesam.com";
+
+function buildInviteMessage(name: string) {
+  return (
+    `Dear ${name},\n\n` +
+    `You are cordially invited to Veda Chekuri's Kuchipudi Rangapravesam!\n\n` +
+    `📅 Sunday, August 2, 2026\n` +
+    `🕑 2:30 PM – 7:30 PM EST\n` +
+    `📍 Richard J. Ernst Community Cultural Center\n` +
+    `   8333 Little River Turnpike, Annandale, VA 22003\n\n` +
+    `Learn more & RSVP: ${EVENT_URL}\n\n` +
+    `We hope to celebrate this milestone with you!\n` +
+    `— The Chekuri Family`
+  );
+}
+
+function normalizePhone(phone: string) {
+  const digits = phone.replace(/\D/g, "");
+  if (digits.length === 10) return `1${digits}`;
+  return digits;
+}
+
+function WhatsAppInviteSection({ rsvps }: { rsvps: Rsvp[] }) {
+  const withPhone = useMemo(
+    () => rsvps.filter((r) => r.phone?.trim()),
+    [rsvps],
+  );
+  const withoutPhone = rsvps.length - withPhone.length;
+
+  const [selected, setSelected] = useState<Set<string>>(() => new Set(withPhone.map((r) => r.id)));
+  const [sent, setSent] = useState<Set<string>>(new Set());
+
+  const allChecked = withPhone.length > 0 && selected.size === withPhone.length;
+
+  function toggleAll() {
+    setSelected(allChecked ? new Set() : new Set(withPhone.map((r) => r.id)));
+  }
+
+  function toggle(id: string) {
+    setSelected((prev) => {
+      const next = new Set(prev);
+      next.has(id) ? next.delete(id) : next.add(id);
+      return next;
+    });
+  }
+
+  const openWhatsApp = useCallback((rsvp: Rsvp) => {
+    const phone = normalizePhone(rsvp.phone);
+    const msg = encodeURIComponent(buildInviteMessage(rsvp.name));
+    window.open(`https://wa.me/${phone}?text=${msg}`, "_blank", "noopener,noreferrer");
+    setSent((prev) => new Set(prev).add(rsvp.id));
+  }, []);
+
+  function sendToSelected() {
+    const targets = withPhone.filter((r) => selected.has(r.id));
+    targets.forEach((r, i) => {
+      setTimeout(() => openWhatsApp(r), i * 600);
+    });
+  }
+
+  return (
+    <div className="mb-10">
+      <SectionHeading>WhatsApp Invitations</SectionHeading>
+
+      {withPhone.length === 0 ? (
+        <p className="text-sm font-serif" style={{ color: "#7a6555" }}>
+          No RSVPs have a phone number on file.
+        </p>
+      ) : (
+        <>
+          <p className="text-xs font-serif mb-4" style={{ color: "#7a6555" }}>
+            {withPhone.length} guest{withPhone.length !== 1 ? "s" : ""} with a phone number.
+            {withoutPhone > 0 && ` ${withoutPhone} without — those cannot be reached via WhatsApp.`}
+            {" "}Opening WhatsApp will use your connected phone via WhatsApp Web or the app.
+          </p>
+
+          <div className="overflow-x-auto border mb-4" style={{ borderColor: "var(--gold, #c49a3c)" }}>
+            <table className="w-full text-sm font-serif">
+              <thead>
+                <tr style={{ backgroundColor: "#f0ebe0" }}>
+                  <th className="px-4 py-3 text-left w-10">
+                    <input
+                      type="checkbox"
+                      checked={allChecked}
+                      onChange={toggleAll}
+                      className="cursor-pointer"
+                      aria-label="Select all"
+                    />
+                  </th>
+                  <th className="px-4 py-3 text-left text-xs uppercase tracking-wider" style={{ color: "var(--gold, #c49a3c)" }}>Name</th>
+                  <th className="px-4 py-3 text-left text-xs uppercase tracking-wider" style={{ color: "var(--gold, #c49a3c)" }}>Phone</th>
+                  <th className="px-4 py-3 text-left text-xs uppercase tracking-wider" style={{ color: "var(--gold, #c49a3c)" }}>Status</th>
+                  <th className="px-4 py-3 text-right text-xs uppercase tracking-wider" style={{ color: "var(--gold, #c49a3c)" }}>Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                {withPhone.map((r, i) => (
+                  <tr
+                    key={r.id}
+                    style={{ backgroundColor: i % 2 === 0 ? "#faf8f2" : "#f7f3eb" }}
+                  >
+                    <td className="px-4 py-3">
+                      <input
+                        type="checkbox"
+                        checked={selected.has(r.id)}
+                        onChange={() => toggle(r.id)}
+                        className="cursor-pointer"
+                        aria-label={`Select ${r.name}`}
+                      />
+                    </td>
+                    <td className="px-4 py-3 font-medium whitespace-nowrap" style={{ color: "#3d1a10" }}>{r.name}</td>
+                    <td className="px-4 py-3 whitespace-nowrap" style={{ color: "#7a6555" }}>{r.phone}</td>
+                    <td className="px-4 py-3">
+                      {sent.has(r.id) && (
+                        <span className="text-xs uppercase tracking-wider" style={{ color: "#2d7a2d" }}>✓ Opened</span>
+                      )}
+                    </td>
+                    <td className="px-4 py-3 text-right">
+                      <button
+                        type="button"
+                        onClick={() => openWhatsApp(r)}
+                        className="inline-flex items-center gap-1.5 text-xs uppercase tracking-wider px-3 py-1.5 transition-opacity hover:opacity-80"
+                        style={{
+                          backgroundColor: "#25D366",
+                          color: "#fff",
+                          border: "none",
+                          borderRadius: "2px",
+                        }}
+                      >
+                        <svg viewBox="0 0 24 24" fill="currentColor" className="w-3.5 h-3.5" aria-hidden="true">
+                          <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/>
+                          <path d="M12 0C5.373 0 0 5.373 0 12c0 2.123.553 4.116 1.522 5.847L.057 23.547a.75.75 0 0 0 .921.921l5.701-1.465A11.945 11.945 0 0 0 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.75a9.703 9.703 0 0 1-4.953-1.358l-.355-.21-3.684.946.964-3.595-.23-.37A9.699 9.699 0 0 1 2.25 12C2.25 6.615 6.615 2.25 12 2.25S21.75 6.615 21.75 12 17.385 21.75 12 21.75z"/>
+                        </svg>
+                        Open
+                      </button>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+
+          <div className="flex items-center gap-3 flex-wrap">
+            <button
+              type="button"
+              disabled={selected.size === 0}
+              onClick={sendToSelected}
+              className="font-serif uppercase tracking-widest text-xs px-5 py-3 disabled:opacity-40 disabled:cursor-not-allowed transition-opacity inline-flex items-center gap-2"
+              style={{
+                backgroundColor: "#25D366",
+                color: "#fff",
+                border: "1px solid #1da851",
+              }}
+            >
+              <svg viewBox="0 0 24 24" fill="currentColor" className="w-4 h-4" aria-hidden="true">
+                <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/>
+                <path d="M12 0C5.373 0 0 5.373 0 12c0 2.123.553 4.116 1.522 5.847L.057 23.547a.75.75 0 0 0 .921.921l5.701-1.465A11.945 11.945 0 0 0 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.75a9.703 9.703 0 0 1-4.953-1.358l-.355-.21-3.684.946.964-3.595-.23-.37A9.699 9.699 0 0 1 2.25 12C2.25 6.615 6.615 2.25 12 2.25S21.75 6.615 21.75 12 17.385 21.75 12 21.75z"/>
+              </svg>
+              Open WhatsApp for {selected.size} Guest{selected.size !== 1 ? "s" : ""}
+            </button>
+            {sent.size > 0 && (
+              <p className="text-xs font-serif" style={{ color: "#2d7a2d" }}>
+                ✓ Opened for {sent.size} guest{sent.size !== 1 ? "s" : ""} — check each WhatsApp tab and hit Send.
+              </p>
+            )}
+          </div>
+        </>
+      )}
+    </div>
+  );
+}
+
 function Dashboard({ data, metricsKey }: { data: MetricsData; metricsKey: string }) {
   const [search, setSearch] = useState("");
 
@@ -543,6 +715,8 @@ function Dashboard({ data, metricsKey }: { data: MetricsData; metricsKey: string
       <ReminderControls metricsKey={metricsKey} totalRsvps={data.total_rsvps} />
 
       <ThanksControls metricsKey={metricsKey} totalRsvps={data.total_rsvps} />
+
+      <WhatsAppInviteSection rsvps={data.rsvps} />
 
       <SectionHeading>All RSVPs</SectionHeading>
 
