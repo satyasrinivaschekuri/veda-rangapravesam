@@ -268,6 +268,8 @@ function ReminderControls({ metricsKey, totalRsvps }: { metricsKey: string; tota
     try {
       const res = await fetch(`${REMINDER_URL}?key=${encodeURIComponent(metricsKey)}`, {
         method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ reminder_type: state.pending === "1-day" ? "1day" : "7day" }),
       });
       if (res.status === 403) {
         setState((s) => ({ ...s, sending: false, pending: null, error: "Access denied." }));
