@@ -264,7 +264,9 @@ function Index() {
               interest in Bollywood dance. She later explored ballet for a year before beginning her training in the
               classical dance form of Kuchipudi. Under the guidance of her Guru, Veda has spent several years learning
               the discipline, technique, and expressive elements of Kuchipudi, including <em>nritta</em> (pure dance)
-              and <em>nritya</em> (expressive dance).
+              and <em>nritya</em> (expressive dance). Recognizing her dedication, steady progress, and eagerness to
+              pursue Rangapravesam, her Guru approved her to present this milestone performance at a younger age than is
+              typically popular.
             </p>
             <p>
               In addition to Kuchipudi, Veda enjoys exploring other dance styles including Bollywood, ballet, and
