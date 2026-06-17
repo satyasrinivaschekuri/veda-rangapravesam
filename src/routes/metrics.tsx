@@ -20,6 +20,13 @@ const METRICS_URL = import.meta.env.VITE_METRICS_URL as string;
 const REMINDER_URL = import.meta.env.VITE_REMINDER_URL as string;
 const THANKS_URL = import.meta.env.VITE_THANKS_URL as string;
 
+const TEST_EMAILS = new Set([
+  "synfuel-4-formats@icloud.com",
+  "kantamneni.v@gmail.com",
+  "satya81.ai@gmail.com",
+  "satya81@gmail.com",
+]);
+
 interface Rsvp {
   id: string;
   name: string;
@@ -520,7 +527,7 @@ function normalizePhone(phone: string) {
 
 function WhatsAppInviteSection({ rsvps }: { rsvps: Rsvp[] }) {
   const withPhone = useMemo(
-    () => rsvps.filter((r) => r.phone?.trim()),
+    () => rsvps.filter((r) => r.phone?.trim() && !TEST_EMAILS.has(r.email?.toLowerCase())),
     [rsvps],
   );
   const withoutPhone = rsvps.length - withPhone.length;
@@ -671,6 +678,36 @@ function WhatsAppInviteSection({ rsvps }: { rsvps: Rsvp[] }) {
 function Dashboard({ data, metricsKey }: { data: MetricsData; metricsKey: string }) {
   const [search, setSearch] = useState("");
 
+  const realRsvps = useMemo(
+    () => data.rsvps.filter((r) => !TEST_EMAILS.has(r.email?.toLowerCase())),
+    [data.rsvps],
+  );
+
+  const filteredData = useMemo<MetricsData>(() => {
+    const realIds = new Set(realRsvps.map((r) => r.id));
+
+    function filterGroups(groups: DuplicateGroup[]) {
+      return groups
+        .map((g) => ({ ...g, ids: g.ids.filter((id) => realIds.has(id)) }))
+        .filter((g) => g.ids.length > 1)
+        .map((g) => ({ ...g, count: g.ids.length }));
+    }
+
+    return {
+      total_rsvps: realRsvps.length,
+      total_adults: realRsvps.reduce((s, r) => s + (r.adults || 0), 0),
+      total_children: realRsvps.reduce((s, r) => s + (r.children || 0), 0),
+      total_attendees: realRsvps.reduce((s, r) => s + (r.attendees || 0), 0),
+      rsvps: data.rsvps,
+      anomalies: {
+        duplicate_emails: filterGroups(data.anomalies.duplicate_emails),
+        duplicate_phones: filterGroups(data.anomalies.duplicate_phones),
+        duplicate_ips: filterGroups(data.anomalies.duplicate_ips),
+        large_groups: data.anomalies.large_groups.filter((r) => !TEST_EMAILS.has(r.email?.toLowerCase())),
+      },
+    };
+  }, [data, realRsvps]);
+
   const filteredRsvps = useMemo(() => {
     const q = search.toLowerCase().trim();
     if (!q) return data.rsvps;
@@ -706,13 +743,13 @@ function Dashboard({ data, metricsKey }: { data: MetricsData; metricsKey: string
       </div>
 
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-10">
-        <StatCard label="Total RSVPs" value={data.total_rsvps} />
-        <StatCard label="Total Attendees" value={data.total_attendees} />
-        <StatCard label="Adults" value={data.total_adults} />
-        <StatCard label="Children" value={data.total_children} />
+        <StatCard label="Total RSVPs" value={filteredData.total_rsvps} />
+        <StatCard label="Total Attendees" value={filteredData.total_attendees} />
+        <StatCard label="Adults" value={filteredData.total_adults} />
+        <StatCard label="Children" value={filteredData.total_children} />
       </div>
 
-      <AnomalySection data={data} />
+      <AnomalySection data={filteredData} />
 
       <ReminderControls metricsKey={metricsKey} totalRsvps={data.total_rsvps} />
 
@@ -774,7 +811,17 @@ function Dashboard({ data, metricsKey }: { data: MetricsData; metricsKey: string
                   }}
                 >
                   <TableCell className="font-serif font-medium whitespace-nowrap" style={{ color: "#3d1a10" }}>
-                    {r.name}
+                    <span className="flex items-center gap-2">
+                      {r.name}
+                      {TEST_EMAILS.has(r.email?.toLowerCase()) && (
+                        <Badge
+                          className="font-serif text-white text-xs"
+                          style={{ backgroundColor: "#7a6555", borderColor: "#7a6555" }}
+                        >
+                          Test
+                        </Badge>
+                      )}
+                    </span>
                   </TableCell>
                   <TableCell className="font-serif whitespace-nowrap" style={{ color: "#3d1a10" }}>
                     {r.email}
