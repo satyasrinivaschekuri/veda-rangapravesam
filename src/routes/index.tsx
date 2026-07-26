@@ -221,7 +221,7 @@ function Index() {
       <Section id="details" eyebrow="Save the Date" title="Event Details" className="bg-secondary/40">
         <div className="grid md:grid-cols-3 gap-8">
           {[
-            { h: "Date", body: <><p className="font-display text-2xl text-primary">August 2, 2026</p><p className="text-muted-foreground mt-2">Sunday</p><p className="text-sm text-muted-foreground mt-3">RSVP by July 17, 2026</p></> },
+            { h: "Date", body: <><p className="font-display text-2xl text-primary">August 2, 2026</p><p className="text-muted-foreground mt-2">Sunday</p></> },
             { h: "Time", body: <><p className="text-foreground">Seating Opens: 2:00 PM EST</p><p className="text-foreground mt-1">Event: 2:30 PM – 7:30 PM EST</p><p className="text-foreground mt-1">Dinner: 7:30 PM EST Onwards</p></> },
             { h: "Venue", body: <><p className="font-display text-xl text-primary">Richard J. Ernst Community Cultural Center</p><p className="text-muted-foreground mt-1">Northern Virginia Community College – Annandale Campus</p><p className="text-foreground mt-2">8333 Little River Turnpike</p><p className="text-foreground">Annandale, VA 22003</p><a href="https://maps.google.com/?q=Richard+J+Ernst+Community+Cultural+Center+Annandale+VA" target="_blank" rel="noreferrer" className="inline-block mt-4 text-[var(--gold)] tracking-widest text-xs uppercase hover:underline">View Map →</a></> }
           ].map((c) => (
@@ -466,7 +466,6 @@ function Index() {
 
       {/* RSVP */}
       <Section id="rsvp" eyebrow="Join Us in Celebration" title="RSVP">
-        {!submitted && <p className="text-center text-muted-foreground mb-10">Please respond by July 17, 2026</p>}
         <div className="max-w-xl mx-auto bg-card border border-border p-8 md:p-10">
           {submitted ? (
             <div className="text-center py-8">
